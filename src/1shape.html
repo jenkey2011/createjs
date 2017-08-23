@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>create.js</title>
+	<script src="js/easejs.min.js"></script>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="800"></canvas>
+</body>
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		var stage = new createjs.Stage(canvas);
+
+		var circle = new createjs.Shape();
+		// circle.graphics.beginFill("DarkRed");
+		// circle.graphics.drawCircle(50,50,50);
+		circle.graphics.beginFill('green').drawCircle(50,50,50)
+		stage.addChild(circle);
+
+		var rect = new createjs.Shape();
+		rect.graphics.beginFill('red').drawRect(150,50,50,50);
+		stage.addChild(rect);
+
+		var roundRect = new createjs.Shape();
+		roundRect.graphics.beginFill('DarkRed').drawRoundRect(50,250,200,150,50,0);
+		stage.addChild(roundRect); 
+		var poly = new createjs.Shape();
+		poly.graphics.beginFill('red').drawPolyStar(80,500,50,9,0.6,-90);
+		stage.addChild(poly);
+
+		var triangle = new createjs.Shape();
+		triangle.graphics.beginFill('darkred').moveTo(300,300).lineTo(400,300).lineTo(400,400).lineTo(300,300);
+		stage.addChild(triangle);
+		stage.update();
+	</script>
+</html>

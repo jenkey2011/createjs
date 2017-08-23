@@ -1,0 +1,42 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+		canvas{
+			border: 2px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="800"></canvas>
+</body>
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		var stage = new createjs.Stage(canvas);
+
+		var img = new createjs.Bitmap('images/pic.jpg');
+		img.x = 100;
+		img.y = 100;
+		img.regX = 0.5;
+		img.regY = 0.5;
+		stage.addChild(img);
+
+		var img2 = new createjs.Bitmap('images/pic.jpg');
+		img2.x = 400;
+		img2.y = 200;
+		img2.regX = 160;
+		img2.regY = 106.5;
+		img2.rotation = 40;
+		stage.addChild(img2);
+
+	createjs.Ticker.timingMode = createjs.Ticker.RAF;
+	createjs.Ticker.on("tick", handleTick);
+	function handleTick() {
+		img2.rotation += 2;
+
+		stage.update();
+	}
+
+	</script>
+</html>

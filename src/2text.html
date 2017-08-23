@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+		canvas{
+			border: 2px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="800"></canvas>
+</body>
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		var stage = new createjs.Stage(canvas);
+
+		var text1 = new createjs.Text('Hello World!','80px serif' , 'darkred');
+		text1.text = 'hello createjs';
+		text1.x = 300;
+		text1.y = 400;
+		text1.textAlign = 'center';
+		text1.textBaseline = 'middle';
+		stage.addChild(text1);
+		stage.update();
+	</script>
+</html>
