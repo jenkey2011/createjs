@@ -1,0 +1,113 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+  body{
+    background: #262626;
+  }
+		canvas{
+		  display: block;
+			border: 2px solid #ccc;
+      margin: 30px auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="400"></canvas>
+</body>
+  <script type="text/javascript">
+    var log = console.log.bind("log")
+
+    var canvas = document.getElementById('myCanvas');
+    var stage = new createjs.Stage(canvas);
+
+    var stageW = stage.canvas.width;
+    var stageH = stage.canvas.height;
+    var boat = new createjs.Shape();
+        boat.graphics
+              .beginFill('lime')
+              .moveTo(0,0)
+              .lineTo(30,10)
+              .lineTo(0,20)
+              .lineTo(0,0)
+        boat.x = stageW / 2 ;
+        boat.y = stageH / 2 ;
+        boat.regX = 15;
+        boat.regY = 10;
+    stage.addChild(boat);
+
+    createjs.Ticker.timingMode = createjs.Ticker.RFA;
+    createjs.Ticker.addEventListener('tick',stage);
+    createjs.Ticker.addEventListener('tick',boatGo);
+
+    window.addEventListener('keydown',boatMove,false);
+
+    var speed = 0;
+    var angle = 0;
+    var friction = 0.8;
+    function boatMove (e){
+      var keyCode = e.keyCode;
+      switch (keyCode) {
+        case 37:
+          log('左');
+          angle -= 3;
+          break;
+        case 38:
+          log('上');
+          speed += 3;
+          break;
+        case 39:
+          log('右');
+          angle += 3;
+          break;
+        case 40:
+          log('下');
+          speed -= 3;
+          break;
+      }
+    }
+
+    function boatGo() {
+      var ra = angle * Math.PI / 180;
+      var vx = speed * Math.cos(ra);
+      var vy = speed * Math.sin(ra);
+
+      boat.rotation = angle;
+      // boat.x += vx;
+      // boat.y += vy;
+
+      speed *= friction;
+
+      // 边界限制
+      boat.x < 0 ? boat.x = 0 : boat.x += vx;
+      boat.x > stageW   ? boat.x = stageW : boat.x += vx;
+      boat.y < 0 ? boat.y = 0 : boat.y += vy;
+      boat.y > stageH ? boat.y = stageH : boat.y += vy;
+      stage.update();
+    }
+
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>create.js</title>
+	<script src="js/easejs.min.js"></script>
+  <style>
+    body{
+      background: #262626;
+    }
+      canvas{
+        display: block;
+        border: 2px solid #ccc;
+        margin: 30px auto;
+      }
+  </style>
+</head>
+<body>
+  <canvas id="wall" width="800" height="600"></canvas>
+</body>
+<script type="text/javascript">
+    var log = console.log.bind("log")
+
+    // 初始化
+    var wall = document.getElementById('wall');
+    var stage = new createjs.Stage(wall);
+
+    var stageW = stage.canvas.width;
+    var stageH = stage.canvas.height;
+
+    // 初始化 表容器
+    var clock = new createjs.Container();
+    clock.x = stageW / 2;
+    clock.y = stageH / 2;
+    stage.addChild(clock);
+
+    // 表盘
+    var shape =  new createjs.Shape();
+    shape.graphics
+            .setStrokeStyle(10)
+            .beginStroke('lime')
+            .drawCircle(0,0,260)
+    clock.addChild(shape);
+
+    // 秒针
+    var sLine = new createjs.Shape();
+    sLine.graphics
+            .setStrokeStyle(2,'round')
+            .beginStroke('lime')
+            .moveTo(0,0)
+            .lineTo(240,0)
+    clock.addChild(sLine);
+
+    // 分针
+    var mLine = new createjs.Shape();
+    mLine.graphics
+            .setStrokeStyle(4,'round')
+            .beginStroke('lime')
+            .moveTo(0,0)
+            .lineTo(220,0)
+    clock.addChild(mLine);
+
+    // 时针
+    var hLine = new createjs.Shape();
+    hLine.graphics
+            .setStrokeStyle(8,'round')
+            .beginStroke('lime')
+            .moveTo(0,0)
+            .lineTo(200,0)
+    clock.addChild(hLine);
+
+    // 数字
+    for ( var i = 1 ; i < 13 ; i++){
+      var num = new createjs.Text("","20px Microsoft YaHei" , 'lime');
+      num.text = i;
+      num.textAlign = 'center';
+      num.textBaseline = 'middle';
+      var numAngle = (i*360/12 -90) * Math.PI / 180;
+      num.x = 240 * Math.cos(numAngle);
+      num.y = 240 * Math.sin(numAngle);
+
+      clock.addChild(num);
+    }
+    createjs.Ticker.timingMode = createjs.Ticker.RFA;
+    createjs.Ticker.addEventListener('tick',run);
+    function run(){
+      var date = new Date();
+      var h = date.getHours();
+      var m = date.getMinutes();
+      var s = date.getSeconds();
+          h = h < 12 ? h : h -12;
+      var sAngle = s / 60  * 360 - 90;
+      var mAngle = m / 60  * 360 - 90;
+      var hAngle = (h / 12) * 360 + (m / 60) * ( 360 / 12)  - 90;
+
+      sLine.rotation = sAngle;
+      mLine.rotation = mAngle;
+      hLine.rotation = hAngle;
+
+      stage.update()
+    }
+</script>
+</html>

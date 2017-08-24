@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>create.js</title>
+	<script src="js/easejs.min.js"></script>
+  <style>
+    body{
+      background: #262626;
+    }
+      canvas{
+        display: block;
+        border: 2px solid #ccc;
+        margin: 30px auto;
+      }
+  </style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="360"></canvas>
+</body>
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		var stage = new createjs.Stage(canvas);
+
+    var stageW = stage.canvas.width;
+    var stageH = stage.canvas.height;
+
+    var time = new createjs.Text("","80px Microsoft YaHei",'lime');
+    time.x = stageW / 2;
+    time.y = stageH / 2;
+    time.textAlign = 'center';
+    time.textBaseline = 'middle';
+    stage.addChild(time);
+
+    createjs.Ticker.timingMode = createjs.Ticker.RFA;
+
+    createjs.Ticker.addEventListener('tick',handdle);
+
+    function handdle(){
+      var date = new Date();
+      var h = date.getHours();
+      var m = date.getMinutes();
+      var s = date.getSeconds();
+      var h = h > 10 ? h : '0' + h;
+      var m = m > 10 ? m : '0' + m;
+      var s = s > 10 ? s : '0' + s;
+      var now = h + ":" + m + ":" + s;
+      time.text = now;
+      stage.update();
+    }
+	</script>
+</html>
