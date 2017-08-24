@@ -1,0 +1,43 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+		canvas{
+		  display: block;
+			border: 2px solid #ccc;
+      margin: 30px auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="300"></canvas>
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var stage = new createjs.Stage(canvas);
+
+    var circle1 = new createjs.Shape();
+        circle1.graphics.beginFill("red").drawCircle(50,50,50);
+    var circle2 = new createjs.Shape();
+        circle2.graphics.beginFill("green").drawCircle(50,180,50);
+
+    stage.addChild(circle1);
+    stage.addChild(circle2);
+
+    circle1.addEventListener('click',remove1,false);
+    circle2.addEventListener('click',remove2,false);
+
+
+    function remove1(){
+      stage.removeChild(circle1);
+      stage.update();
+    }
+    function remove2(){
+      stage.removeChild(circle2);
+      stage.update();
+    }
+
+
+    stage.update();
+  </script>
+</body>

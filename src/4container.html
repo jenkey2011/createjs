@@ -1,0 +1,103 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+		canvas{
+		  display: block;
+			border: 2px solid #ccc;
+      margin: 30px auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="140"></canvas>
+  <canvas id="canvas" width="600" height="600"></canvas>
+</body>
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		var stage = new createjs.Stage(canvas);
+
+    var container = new createjs.Container();
+    container.x = 0;
+    container.y = 20;
+    stage.addChild(container);
+
+    var circle = new createjs.Shape();
+    circle.graphics.beginFill("darkRed").drawCircle(50,50,50);
+    container.addChild(circle);
+
+    var rect = new createjs.Shape();
+    rect.graphics.beginFill('green').drawRoundRect(50,50,100,50,20,10);
+    container.addChild(rect);
+
+    createjs.Ticker.setFPS(60);
+    createjs.Ticker.addEventListener('tick',handleTick);
+    function handleTick(){
+      container.x += 1;
+      if(container.x >= 800){
+        container.x = 0;
+      }
+      stage.update();
+    }
+
+    // 初始化画布
+    var loadCanvas = document.getElementById('canvas');
+    var loadStage = new createjs.Stage(loadCanvas);
+
+    // 创建容器
+    var loadContainer = new createjs.Container();
+    loadContainer.x = 300;
+    loadContainer.y = 300;
+    loadStage.addChild(loadContainer);
+
+    // 容器圆心
+    var point = new createjs.Shape();
+    point.graphics.beginFill('red').drawCircle(0,0,10);
+    loadContainer.addChild(point);
+
+    // 创建小球
+    var n = 19;
+    var r = 200;
+    for(var i = 0 ; i < n ; i++){
+      var ball = new createjs.Shape();
+      ball.graphics
+            .beginFill('green')
+            .drawCircle(0,0,20);
+            ball.x = r * Math.cos(360*i/n * Math.PI / 180);
+            ball.y = r * Math.sin(360*i/n * Math.PI / 180);
+      loadContainer.addChild(ball);
+    }
+    createjs.Ticker.setFPS(60);
+    createjs.Ticker.addEventListener('tick',load);
+    function load(){
+      loadContainer.rotation += 1;
+      loadStage.update();
+    }
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

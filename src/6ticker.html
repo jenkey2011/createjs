@@ -1,0 +1,39 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+		canvas{
+		  display: block;
+			border: 2px solid #ccc;
+      margin: 30px auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="300"></canvas>
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var stage = new createjs.Stage(canvas);
+
+    var circle1 = new createjs.Shape();
+        circle1.graphics.beginFill("red").drawCircle(50,50,50);
+    stage.addChild(circle1);
+    stage.update();
+
+    createjs.Ticker.timeingMode = createjs.Ticker.RAF;
+    createjs.Ticker.addEventListener('tick',stage);
+    createjs.Ticker.addEventListener('tick',handleTick);
+
+    function handleTick(){
+      circle1.x += 1;
+
+      if(circle1.x > 600){
+        circle1.x = 0;
+      }
+
+
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+  body{
+    /*background: #262626;*/
+  }
+		canvas{
+		  display: block;
+			border: 2px solid #ccc;
+      margin: 30px auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="300"></canvas>
+
+</body>
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var stage = new createjs.Stage(canvas);
+    stage.enableMouseOver();
+    createjs.Ticker.timingMode = createjs.Ticker.RFA;
+    createjs.Ticker.addEventListener('tick',stage);
+
+    var btn1 = createButton("BurlyWood",150,40,'BurlyWood');
+        btn1.x = 10;
+        btn1.y = 130;
+    stage.addChild(btn1);
+
+    var btn2 = createButton("coral",150,40,'coral');
+        btn2.x = 200;
+        btn2.y = 130;
+    stage.addChild(btn2);
+
+    var btn3 = createButton("cyan",150,40,'cyan');
+        btn3.x = 390;
+        btn3.y = 130;
+    stage.addChild(btn3);
+
+    btn1.addEventListener('click',func,false);
+    btn2.addEventListener('click',func,false);
+    btn3.addEventListener('click',func,false);
+
+    function func(e){
+      alert('您点击了' + e.currentTarget.name + '按钮~')
+    }
+
+    /**
+     * CreateJSのボタンを作成する関数です。
+     * この関数でボタンを作ったらステージに追加したり、クリックイベントを登録しましょう。
+     * @param {String} text ボタンのラベル文言です。
+     * @param {Number} width ボタンの横幅(単位はpx)です。
+     * @param {Number} height ボタンの高さ(単位はpx)です。
+     * @param {String} keyColor ボタンのキーカラーです。
+     * @returns {createjs.Container} ボタンの参照を返します。
+     */
+    function createButton(text, width, height, keyColor) {
+
+      // ボタン要素をグループ化
+      var button = new createjs.Container();
+      button.name = text; // ボタンに参考までに名称を入れておく(必須ではない)
+      button.cursor = "pointer"; // ホバー時にカーソルを変更する
+
+      // 通常時の座布団を作成
+      var bgUp = new createjs.Shape();
+      bgUp.graphics
+              .setStrokeStyle(1.0)
+              .beginStroke(keyColor)
+              .beginFill("white")
+              .drawRoundRect(0.5, 0.5, width - 1.0, height - 1.0, 4);
+      button.addChild(bgUp);
+      bgUp.visible = true; // 表示する
+
+      // ロールオーバー時の座布団を作成
+      var bgOver = new createjs.Shape();
+      bgOver.graphics
+              .beginFill(keyColor)
+              .drawRoundRect(0, 0, width, height, 4);
+      bgOver.visible = false; // 非表示にする
+      button.addChild(bgOver);
+
+      // ラベルを作成
+      var label = new createjs.Text(text, "18px sans-serif", keyColor);
+      label.x = width / 2;
+      label.y = height / 2;
+      label.textAlign = "center";
+      label.textBaseline = "middle";
+      button.addChild(label);
+
+      // ロールオーバーイベントを登録
+      button.addEventListener("mouseover", handleMouseOver);
+      button.addEventListener("mouseout", handleMouseOut);
+      function handleMouseOver(event) {
+        bgUp.visble = false;
+        bgOver.visible = true;
+        label.color = "white";
+      }
+
+      function handleMouseOut(event) {
+        bgUp.visble = true;
+        bgOver.visible = false;
+        label.color = keyColor;
+      }
+
+      return button;
+    }
+  </script>
+</html>

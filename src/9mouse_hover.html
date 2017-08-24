@@ -1,0 +1,56 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+  body{
+    background: #262626;
+  }
+		canvas{
+		  display: block;
+			border: 2px solid #ccc;
+      margin: 30px auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="300"></canvas>
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var stage = new createjs.Stage(canvas);
+    stage.enableMouseOver();
+
+    var circle = new createjs.Shape();
+        circle.graphics.beginFill("Lime").drawCircle(0,0,50);
+        circle.x = stage.canvas.width / 2 ;
+        circle.y = stage.canvas.height / 2 ;
+
+    stage.addChild(circle);
+
+    createjs.Ticker.timeingMode = createjs.Ticker.RAF;
+    createjs.Ticker.addEventListener('tick',stage);
+
+    circle.addEventListener('mousedown',mouseDown);
+    circle.addEventListener('pressmove',mouseMove);
+    circle.addEventListener('pressup',mouseUp);
+
+    var oldX = 0,
+        oldY = 0;
+
+    function mouseDown(){
+      oldX = stage.mouseX - circle.x;
+      oldY = stage.mouseY - circle.y;
+      circle.alpha = 0.5;
+    }
+
+    function mouseMove(){
+      circle.x = stage.mouseX - oldX;
+      circle.y = stage.mouseY - oldY;
+    }
+
+    function mouseUp(){
+        circle.alpha = 1;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+  body{
+    background: #262626;
+  }
+		canvas{
+		  display: block;
+			border: 2px solid #ccc;
+      margin: 30px auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="400"></canvas>
+</body>
+  <script type="text/javascript">
+    var log = console.log.bind("log")
+
+    var canvas = document.getElementById('myCanvas');
+    var stage = new createjs.Stage(canvas);
+
+    var stageW = stage.canvas.width;
+    var stageH = stage.canvas.height;
+    var boat = new createjs.Shape();
+        boat.graphics
+              .beginFill('lime')
+              .moveTo(0,0)
+              .lineTo(30,10)
+              .lineTo(0,20)
+              .lineTo(0,0)
+        boat.x = stageW / 2 ;
+        boat.y = stageH / 2 ;
+    stage.addChild(boat);
+
+    createjs.Ticker.timingMode = createjs.Ticker.RFA;
+    createjs.Ticker.addEventListener('tick',stage);
+
+    window.addEventListener('keydown',boatMove,false);
+
+    function boatMove (e){
+      var keyCode = e.keyCode;
+      switch (keyCode) {
+        case 37:
+          boat.rotation = -180;
+          boat.x > 30 ? boat.x -= 3 : boat.x = 30;
+          break;
+        case 38:
+          boat.rotation = -90;
+          boat.y > 30 ? boat.y -= 3 : boat.y = 30;
+          break;
+        case 39:
+          boat.rotation = 0;
+          boat.x < stageW - 30 ? boat.x += 3 : boat.x = stageW - 30;
+          boat.x += 3;
+          break;
+        case 40:
+          boat.rotation = -270;
+          boat.y < stageH - 30 ? boat.y += 3 : boat.y = stageH - 30;
+          break;
+      }
+    }
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

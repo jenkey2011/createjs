@@ -1,0 +1,43 @@
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/easejs.min.js"></script>
+	<style>
+  body{
+    background: #262626;
+  }
+		canvas{
+		  display: block;
+			border: 2px solid #ccc;
+      margin: 30px auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="300"></canvas>
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var stage = new createjs.Stage(canvas);
+    if(createjs.Touch.isSupported() == true){
+      createjs.Touch.enable(stage);
+    }
+
+    var circle = new createjs.Shape();
+        circle.graphics.beginFill("Lime").drawCircle(0,0,50);
+    stage.addChild(circle);
+    stage.update();
+
+    createjs.Ticker.timeingMode = createjs.Ticker.RAF;
+    createjs.Ticker.addEventListener('tick',stage);
+    createjs.Ticker.addEventListener('tick',handleTick);
+
+    function handleTick(){
+      var mx = stage.mouseX;
+      var my = stage.mouseY;
+
+      circle.x = mx;
+      circle.y = my;
+    }
+  </script>
+</body>
+</html>
