@@ -48,7 +48,7 @@
             .setStrokeStyle(2,'round')
             .beginStroke('lime')
             .moveTo(0,0)
-            .lineTo(240,0)
+            .lineTo(230,0)
     clock.addChild(sLine);
 
     // 分针
@@ -57,7 +57,7 @@
             .setStrokeStyle(4,'round')
             .beginStroke('lime')
             .moveTo(0,0)
-            .lineTo(220,0)
+            .lineTo(210,0)
     clock.addChild(mLine);
 
     // 时针
@@ -66,7 +66,7 @@
             .setStrokeStyle(8,'round')
             .beginStroke('lime')
             .moveTo(0,0)
-            .lineTo(200,0)
+            .lineTo(180,0)
     clock.addChild(hLine);
 
     // 数字
@@ -76,11 +76,37 @@
       num.textAlign = 'center';
       num.textBaseline = 'middle';
       var numAngle = (i*360/12 -90) * Math.PI / 180;
-      num.x = 240 * Math.cos(numAngle);
-      num.y = 240 * Math.sin(numAngle);
+      num.x = 230 * Math.cos(numAngle);
+      num.y = 230 * Math.sin(numAngle);
 
       clock.addChild(num);
     }
+
+		// 刻度
+		for(var k = 0 ; k < 60 ; k++){
+			var ruline = new createjs.Shape();
+
+			if(k % 5 == 0){
+				ruline.graphics
+							.clear()
+							.setStrokeStyle(5,'round')
+							.beginStroke('lime')
+							.moveTo(240,0)
+							.lineTo(260,0)
+			}else{
+				ruline.graphics
+							.setStrokeStyle(1,'round')
+							.beginStroke('lime')
+							.moveTo(245,0)
+							.lineTo(260,0)
+			}
+			var rulineAngle = (k*360/12) * Math.PI / 180;
+			ruline.rotation = k*360/60
+			// ruline.x = 230 * Math.cos(rulineAngle);
+			// ruline.y = 230 * Math.sin(rulineAngle);
+			clock.addChild(ruline)
+		}
+
     createjs.Ticker.timingMode = createjs.Ticker.RFA;
     createjs.Ticker.addEventListener('tick',run);
     function run(){
