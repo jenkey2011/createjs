@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>create.js</title>
+	<script src="js/easejs.min.js"></script>
+	<script src="js/tween.min.js"></script>
+
+  <style>
+    body{
+      background: #262626;
+    }
+      canvas{
+        display: block;
+        border: 2px solid #ccc;
+        margin: 30px auto;
+      }
+      
+  </style>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="600"></canvas>
+	  <!-- <canvas id="myCanvas" width="960" height="540"></canvas> -->
+</body>
+	<script>
+		var log = console.log.bind('log');
+		var canvas = document.getElementById('canvas');
+		var stage = new createjs.Stage(canvas);
+		
+		var stageWidth = stage.canvas.width;
+		var stageHeight = stage.canvas.height;
+	 	var arrow = new createjs.Shape();
+	  arrow.graphics
+	          .beginFill("lime") // 四角形を描く
+	          .drawRect(-6, -3, 12, 6)
+	          .beginFill("lime") // 三角形を描く
+	          .moveTo(5, 10)
+	          .lineTo(15, 0)
+	          .lineTo(5, -10)
+	          .closePath();
+	  arrow.x = stageWidth / 2;
+	  arrow.y = stageHeight / 2;
+	  stage.addChild(arrow);
+    // 实时刷新
+    createjs.Ticker.timingMode = createjs.Ticker.RFA;
+    createjs.Ticker.addEventListener('tick',handleTick);
+
+    function handleTick() {
+    	var diffX = stage.mouseX - arrow.x;
+    	var diffY = stage.mouseY - arrow.y;
+    	var radians = Math.atan2(diffY,diffX);
+    	var degrees = radians * 180 / Math.PI;
+			arrow.rotation = degrees;    	
+
+    	stage.update();
+    }
+
+	</script>
+</html>

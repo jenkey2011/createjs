@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>create.js</title>
+	<script src="js/easejs.min.js"></script>
+	<script src="js/tween.min.js"></script>
+
+  <style>
+    body{
+      background: #262626;
+    }
+      canvas{
+        display: block;
+        border: 2px solid #ccc;
+        margin: 30px auto;
+      }
+      
+  </style>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="600"></canvas>
+	  <!-- <canvas id="myCanvas" width="960" height="540"></canvas> -->
+</body>
+	<script>
+		var log = console.log.bind('log');
+		var canvas = document.getElementById('canvas');
+		var stage = new createjs.Stage(canvas);
+		
+		var circle = new createjs.Shape();
+		circle.graphics.beginFill("lime").drawCircle(0, 0, 50);
+		circle.y = 200;
+		stage.addChild(circle);
+
+
+		createjs.Tween.get(circle) // ターゲットを指定
+        .to({
+        	x: 540,
+        	y: 300,
+        	alpha: 0.2
+	      }, 2000)
+	      .wait(2000)
+	      .to({
+	      	x: 340,
+        	y: 150,
+        	alpha: 0.8
+	      },2000)
+	      .to({
+	      	scaleX: 3, 
+	      	scaleY: 3,
+	      	alpha: 0.8
+	      },1000,createjs.Ease.bounceOut)
+	      .call(callMe)
+	  function callMe() {
+	  	log("回调");
+	  }
+    // 实时刷新
+    createjs.Ticker.timingMode = createjs.Ticker.RFA;
+    createjs.Ticker.addEventListener('tick',stage);
+
+	</script>
+</html>
